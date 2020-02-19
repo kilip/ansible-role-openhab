@@ -12,13 +12,18 @@ platforms:
   published_ports:
     - 0.0.0.0:8443:8443
     - 0.0.0.0:8080:8080
+  volumes:
+  - ./cache/apt:/var/cache/apt/archives:rw
 
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
 
 verifier:
-  name: testinfra
+  name: inspec
   lint:
-    name: flake8
+    name: rubocop

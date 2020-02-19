@@ -1,12 +1,31 @@
+- name: Add required package
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - software-properties-common
+  - python-apt
+
 - name: Add Zulu APT Key
   apt_key:
     keyserver: hkp://keyserver.ubuntu.com:80
-    id: 0xB1998361219BD9C9
+    id: '0xB1998361219BD9C9'
     state: present
-  when: ansible_os_family == 'Debian'
 
 - name: Add Zulu Java Repository
   apt_repository:
+    filename: 'zulu'
     repo: deb http://repos.azulsystems.com/ubuntu stable main
+    state: present
+
+- name: Add OpenHab apt key
+  apt_key:
+    url: https://bintray.com/user/downloadSubjectPublicKey?username=openhab
+    state: present
+
+- name: Add OpenHab Repository
+  apt_repository:
+    filename: 'openhab'
+    repo: deb https://dl.bintray.com/openhab/apt-repo2 stable main
     state: present
   when: ansible_os_family == 'Debian'
