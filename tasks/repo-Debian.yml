@@ -4,7 +4,7 @@
     id: 0xB1998361219BD9C9
     state: present
   when: ansible_os_family == 'Debian'
-  
+
 - name: Add Zulu Java Repository
   apt_repository:
     repo: deb http://repos.azulsystems.com/ubuntu stable main

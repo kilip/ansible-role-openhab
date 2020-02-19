@@ -13,18 +13,21 @@ def test_hosts_file(host):
     assert f.user == 'root'
     assert f.group == 'root'
 
+
 def test_package(host):
-    java    = host.package('zulu-8')
+    java = host.package('zulu-8')
     openhab = host.package('openhab2')
     assert java.is_installed
     assert openhab.is_installed
+
 
 def test_openhab_service(host):
     openhab = host.service('openhab2')
     assert openhab.is_running
 
+
 def test_http_port(host):
-    http  = host.socket('tcp://0.0.0.0:8080')
+    http = host.socket('tcp://0.0.0.0:8080')
     https = host.socket('tcp://0.0.0.0:8443')
     assert http.is_listening
     assert https.is_listening
