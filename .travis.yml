@@ -1,0 +1,29 @@
+---
+dist: bionic
+language: python
+services: docker
+
+cache:
+- pip
+- apt
+
+env:
+  global:
+  - ROLE_NAME: certbot
+  matrix:
+  - MOLECULE_DISTRO: centos:7
+  - MOLECULE_DISTRO: ubuntu:bionic
+  - MOLECULE_DISTRO: ubuntu:xenial
+  - MOLECULE_DISTRO: Debian:10
+
+install:
+  # Install test dependencies.
+  - pip install molecule docker
+
+before_script:
+- cd ../
+- mv ansible-role-$ROLE_NAME $ROLE_NAME
+- cd $ROLE_NAME
+
+script:
+  - molecule test

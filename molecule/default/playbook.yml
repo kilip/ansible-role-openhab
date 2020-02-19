@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: openhab
+  vars:
+    openhab_install_addons: true
