@@ -24,6 +24,6 @@ provisioner:
       interpreter_python: auto_silent
 
 verifier:
-  name: inspec
+  name: testinfra
   lint:
-    name: rubocop
+    name: flake8
