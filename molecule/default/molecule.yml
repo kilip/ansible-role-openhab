@@ -1,29 +1,30 @@
 ---
 dependency:
   name: galaxy
+
 driver:
   name: docker
-lint:
-  name: yamllint
+
+lint: |
+  yamllint . ansible-lint
 
 platforms:
 - name: instance
-  image: "${MOLECULE_DISTRO:-centos:7}"
+  image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible"
   published_ports:
     - 0.0.0.0:8443:8443
     - 0.0.0.0:8080:8080
+  command: ${MOLECULE_DOCKER_COMMAND:-""}
+  privileged: true
+  pre_build_image: true
   volumes:
-  - ./cache/apt:/var/cache/apt/archives:rw
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
   config_options:
     defaults:
       interpreter_python: auto_silent
 
 verifier:
   name: testinfra
-  lint:
-    name: flake8
