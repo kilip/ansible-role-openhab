@@ -19,7 +19,6 @@
   package:
     name: zulu-8
     state: present
-    update_cache: true
 
 - name: Setup openhab packages
   set_fact:
