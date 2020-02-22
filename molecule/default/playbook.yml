@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   pre_tasks:
-    - name: pakcage ~> add software properties
+    - name: package ~> add apt utils
       package:
         name: "{{ item }}"
         state: present
