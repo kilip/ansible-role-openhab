@@ -6,7 +6,8 @@ driver:
   name: docker
 
 lint: |
-  yamllint . ansible-lint
+  yamllint .
+  ansible-lint
 
 platforms:
 - name: instance
