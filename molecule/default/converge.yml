@@ -10,7 +10,7 @@
       package:
         name: "{{ item }}"
         state: present
-        item:
+        loop:
         - software-properties-common
         - apt-transport-https
       when: ansible_os_family == 'Debian'
