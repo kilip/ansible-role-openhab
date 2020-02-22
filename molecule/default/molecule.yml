@@ -26,6 +26,8 @@ provisioner:
   config_options:
     defaults:
       interpreter_python: auto_silent
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
 
 verifier:
   name: testinfra
