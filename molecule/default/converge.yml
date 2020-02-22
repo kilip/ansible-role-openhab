@@ -12,7 +12,7 @@
       loop:
         - software-properties-common
         - apt-transport-https
-        - gpg
+        - python3-apt
       when: ansible_os_family == 'Debian'
   roles:
     - role: openhab
