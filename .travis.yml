@@ -20,8 +20,7 @@ env:
 
 install:
   # Install test dependencies.
-  - pip install molecule docker testinfra
-
+  - pip install molecule yamllint ansible-lint docker testinfra
 before_script:
 - cd ../
 - mv ansible-role-$ROLE_NAME $ROLE_NAME
