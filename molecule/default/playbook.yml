@@ -3,11 +3,13 @@
   hosts: all
   pre_tasks:
     - name: pakcage ~> add software properties
-      package: "{{ item }}"
-      state: present
-      loop:
-      - software-properties-common
-      - apt-transport-https
+      package:
+        name: "{{ item }}"
+        state: present
+        loop:
+        - software-properties-common
+        - apt-transport-https
+        when: ansible_os_family == 'Debian'
   roles:
     - role: openhab
   vars:

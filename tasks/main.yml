@@ -1,10 +1,11 @@
 ---
 # user setup
-- name: Create group for openhab
+- name: group ~> create for openhab
   group:
     name: openhab
     state: present
-- name: Create user for openhab
+
+- name: user ~> create for openhab
   user:
     name: openhab
     comment: Openhab System User
@@ -15,25 +16,25 @@
 
 - include: "repo-{{ ansible_os_family }}.yml"
 
-- name: Install Zulu Java 8
+- name: package ~> install zulu-8
   package:
     name: zulu-8
     state: present
     update_cache: yes
 
-- name: Setup openhab packages
+- name: set_fact ~> openhab install addons packages
   set_fact:
     openhab_packages: "{{ openhab_packages + [ 'openhab2-addons' ] }}"
   when: openhab_install_addons
 
-- name: Install Openhab
+- name: pacakage ~> install openhab packages
   package:
     name: "{{ item }}"
     state: present
     update_cache: true
   with_items: "{{ openhab_packages }}"
 
-- name: Configure openhab default config
+- name: template ~> configure /etc/default/openhab2
   template:
     src: files/openhab-default.conf
     dest: /etc/default/openhab2
@@ -42,7 +43,7 @@
     mode: '0644'
     backup: yes
 
-- name: Start openhab service, if not started
+- name: service ~> start openhab
   service:
     name: openhab2
     state: started
