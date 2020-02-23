@@ -16,11 +16,14 @@
 
 - include: "repo-{{ ansible_os_family }}.yml"
 
+# @todo: fix what happen on ubuntu bionic error
 - name: package ~> install zulu-8
   package:
     name: zulu-8
     state: present
     update_cache: yes
+  register: zulu8_stat
+  failed_when: zulu8_stat.rc > 99
 
 - name: set_fact ~> openhab install addons packages
   set_fact:
