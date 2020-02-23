@@ -15,7 +15,6 @@
         - apt-transport-https
         - python3-apt
         - dirmngr
-        - default-jre
       when: ansible_os_family == 'Debian'
   roles:
     - role: openhab
