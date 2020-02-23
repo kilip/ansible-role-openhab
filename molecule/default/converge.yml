@@ -11,9 +11,11 @@
         state: present
       loop:
         - software-properties-common
+        - ca-certificates
         - apt-transport-https
         - python3-apt
         - dirmngr
+        - openjdk-8-jre-headless
         - openjdk-8-jdk
       when: ansible_os_family == 'Debian'
   roles:
