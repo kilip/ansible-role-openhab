@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+    - name: package ~> add apt utils
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - software-properties-common
+        - ca-certificates
+        - apt-transport-https
+        - python3-apt
+        - dirmngr
+      when: ansible_os_family == 'Debian'
+  roles:
+    - role: openhab
+  vars:
+    openhab_install_addons: true
