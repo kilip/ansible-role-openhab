@@ -16,6 +16,11 @@
         - python3-apt
         - dirmngr
       when: ansible_os_family == 'Debian'
+    - name: file ~> patch ubuntu bionic
+      when: ansible_distribution_version == '18.04'
+      file:
+        path: /usr/share/man/man1
+        state: directory
   roles:
     - role: openhab
   vars:

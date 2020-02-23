@@ -29,10 +29,3 @@
     repo: deb https://dl.bintray.com/openhab/apt-repo2 stable main
     state: present
   when: ansible_os_family == 'Debian'
-
-- name: file ~> patch ubuntu bionic
-  when: ansible_distribution_version == '18.04'
-  file:
-    path: /usr/share/man/man1
-    state: directory
-
