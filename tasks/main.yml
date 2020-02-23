@@ -22,8 +22,6 @@
     name: zulu-8
     state: present
     update_cache: yes
-  register: zulu8_stat
-  failed_when: zulu8_stat.rc > 1000
 
 - name: set_fact ~> openhab install addons packages
   set_fact:
