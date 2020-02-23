@@ -1,11 +1,8 @@
-- name: command ~> list existing apt-key
-  command: apt-key list
-  register: zulu_apt_key_stat
-  changed_when: zulu_apt_key_stat.rc==0 or zulu_apt_key_stat.rc>99
-
-- name: command ~> add apt key for zulu
-  command: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB1998361219BD9C9
-  when: zulu_apt_key_stat.stdout.find('azulsystems') == -1
+- name: apt_key ~> add zulu key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: '0xB1998361219BD9C9'
+    state: present
 
 - name: apt_repository ~> add ubuntu
   apt_repository:
