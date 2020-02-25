@@ -1,3 +1,8 @@
+- name: package ~> ensure epel installed
+  package:
+    name: epel-release
+    state: present
+
 - name: repository ~> add zulu repo
   yum_repository:
     name: zulu
