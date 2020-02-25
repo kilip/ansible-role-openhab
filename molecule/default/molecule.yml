@@ -31,3 +31,5 @@ provisioner:
 
 verifier:
   name: testinfra
+  options:
+    verbose: true

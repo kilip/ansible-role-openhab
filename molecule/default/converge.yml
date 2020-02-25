@@ -25,3 +25,7 @@
     - role: openhab
   vars:
     openhab_install_addons: true
+    openhab_conf: /srv/openhab/config
+    openhab_userdata: /srv/openhab/userdata
+    openhab_config_repo: https://kilip@bitbucket.org/kilip/openhab-default-config.git
+    openhab_config_owner: toni

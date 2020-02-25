@@ -1,18 +1,5 @@
 ---
-# user setup
-- name: group ~> create for openhab
-  group:
-    name: openhab
-    state: present
-
-- name: user ~> create for openhab
-  user:
-    name: openhab
-    comment: Openhab System User
-    append: yes
-    groups: openhab
-    state: present
-    system: true
+- include: setup-config.yml
 
 - include: "repo-{{ ansible_os_family }}.yml"
 

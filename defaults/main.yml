@@ -12,3 +12,9 @@ openhab_http_address: 0.0.0.0
 openhab_backups: /var/lib/openhab2/backups
 openhab_extra_java_opts: ""
 openhab_conf: /etc/openhab
+openhab_userdata: /var/lib/openhab2
+
+openhab_config_repo: ""
+openhab_config_version: "master"
+openhab_config_owner: openhab
+openhab_config_group: openhab
