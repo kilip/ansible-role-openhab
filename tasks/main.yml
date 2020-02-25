@@ -22,6 +22,29 @@
     update_cache: true
   with_items: "{{ openhab_packages }}"
 
+- name: service ~> start openhab
+  service:
+    name: openhab2
+    state: started
+    enabled: yes
+
+# begin custom config
+- name: stat ~> gather for userdata/etc
+  stat:
+    path: /srv/openhab/userdata/etc
+  register: userdata_etc
+
+- name: copy ~> copy basic userdata
+  become: openhab
+  copy:
+    dest: /srv/openhab/userdata
+    src: /var/lib/openhab2/etc
+    owner: openhab
+    group: openhab
+    mode: '0775'
+    remote_src: yes
+  when: not userdata_etc.stat.exists
+
 - name: template ~> configure /etc/default/openhab2
   template:
     src: files/openhab-default.conf
@@ -30,8 +53,5 @@
     group: root
     mode: '0644'
     backup: yes
-
-- name: service ~> start openhab
-  service:
-    name: openhab2
-    state: started
+  notify:
+  - openhab restart

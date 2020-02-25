@@ -31,19 +31,21 @@
     state: directory
     owner: "{{ openhab_config_owner }}"
     group: "{{ openhab_config_group }}"
+    mode: "0775"
 
 - name: package ~> ensure git installed
   package:
     name: git
     state: present
-  when: openhab_config_repo == None
+  when: openhab_config_repo != None
 
 - name: git ~> checkout config "{{ openhab_config_repo }}"
+  become: "{{ openhab_config_owner }}"
   git:
     repo: "{{ openhab_config_repo }}"
     dest: "{{ openhab_conf }}"
     version: "{{ openhab_config_version }}"
-  when: openhab_config_repo == None
+  when: openhab_config_repo != None
 
 - name: file ~> ensure userdata dir exists
   file:
@@ -51,3 +53,4 @@
     state: directory
     owner: "openhab"
     group: "openhab"
+    mode: "0775"
