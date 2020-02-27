@@ -15,5 +15,5 @@
   yum_repository:
     name: openhab2
     description: Openhab 2 Stable
-    baseurl: https://dl.bintray.com/openhab/rpm-repo2/stable
-    gpgkey: https://bintray.com/user/downloadSubjectPublicKey?username=openhab
+    baseurl: http://dl.bintray.com/openhab/rpm-repo2/stable
+    gpgkey: http://bintray.com/user/downloadSubjectPublicKey?username=openhab

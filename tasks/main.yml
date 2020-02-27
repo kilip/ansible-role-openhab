@@ -3,7 +3,6 @@
 
 - include: "repo-{{ ansible_os_family }}.yml"
 
-# @todo: fix what happen on ubuntu bionic error
 - name: package ~> install zulu-8
   package:
     name: zulu-8
@@ -15,7 +14,7 @@
     openhab_packages: "{{ openhab_packages + [ 'openhab2-addons' ] }}"
   when: openhab_install_addons
 
-- name: pacakage ~> install openhab packages
+- name: package ~> install openhab packages
   package:
     name: "{{ item }}"
     state: present
