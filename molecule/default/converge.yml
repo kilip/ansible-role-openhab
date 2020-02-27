@@ -2,30 +2,34 @@
 - name: Converge
   hosts: all
   pre_tasks:
+
     - name: Update apt cache.
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
-    - name: package ~> add apt utils
-      package:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - software-properties-common
-        - ca-certificates
-        - apt-transport-https
-        - python3-apt
-        - dirmngr
-      when: ansible_os_family == 'Debian'
-    - name: file ~> patch ubuntu bionic
-      when: ansible_distribution_version == '18.04'
+
+    - name: file ~> generate deploy dir
       file:
-        path: /usr/share/man/man1
+        path: /srv/deploy
         state: directory
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: file ~> generate openssh dir
+      copy:
+        src: ./files/development.rsa
+        dest: /srv/deploy/openhab.rsa
+        owner: root
+        group: root
+        mode: '0600'
+
   roles:
     - role: openhab
+
   vars:
     openhab_install_addons: true
     openhab_conf: /srv/openhab/config
     openhab_userdata: /srv/openhab/userdata
-    openhab_config_repo: https://kilip@bitbucket.org/kilip/openhab-default-config.git
+    openhab_config_repo: git@bitbucket.org:kilip/openhab-default-config.git
+    openhab_config_ssh_keyfile: /srv/deploy/openhab.rsa
     openhab_config_owner: toni
