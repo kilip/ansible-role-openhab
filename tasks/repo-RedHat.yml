@@ -21,4 +21,3 @@
 - name: fact ~> set fact for RedHat
   set_fact:
     _openhab_apache2utils_package: httpd-tools
-
