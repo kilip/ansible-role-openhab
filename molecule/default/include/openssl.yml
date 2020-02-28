@@ -1,0 +1,29 @@
+- name: package ~> ensure package installed for openssl
+  package:
+    name: python3-cryptography
+    state: present
+
+- name: file ~> create openssl dir
+  file:
+    path: /etc/nginx/cert
+    state: directory
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Generate an OpenSSL private key with the default values
+  openssl_privatekey:
+    path: /etc/nginx/cert/openhab.pem
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: /etc/nginx/cert/openhab.csr
+    privatekey_path: /etc/nginx/cert/openhab.pem
+    common_name: test.itstoni.com
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: /etc/nginx/cert/openhab.crt
+    privatekey_path: /etc/nginx/cert/openhab.pem
+    csr_path: /etc/nginx/cert/openhab.csr
+    provider: selfsigned

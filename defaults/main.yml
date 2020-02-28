@@ -1,9 +1,8 @@
 ---
 # defaults file for openhab
-
 openhab_install_addons: false
 openhab_packages:
-- openhab2
+  - openhab2
 
 # openhab default config section
 openhab_http_port: 8080
@@ -20,3 +19,15 @@ openhab_config_ssh_keyfile: null
 openhab_config_version: "master"
 openhab_config_owner: openhab
 openhab_config_group: openhab
+
+openhab_configure_nginx: false
+openhab_nginx_users: []
+openhab_nginx_server_name: 'openhab.example.com'
+openhab_nginx_certificate: '/etc/letsencrypt/live/openhab.example.com/fullchain.pem'
+openhab_nginx_certificate_key: '/etc/letsencrypt/live/openhab.example.com/privkey.pem'
+openhab_nginx_auth_message: 'Username and Password Required'
+openhab_nginx_password_file: "{{ openhab_conf }}/.htpasswd"
+openhab_nginx_options: ""
+openhab_nginx_allow: []
+
+_openhab_apache2utils_package: apache2-utils

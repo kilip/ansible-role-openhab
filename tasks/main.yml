@@ -46,11 +46,15 @@
 
 - name: template ~> configure /etc/default/openhab2
   template:
-    src: files/openhab-default.conf
+    src: openhab-default.conf
     dest: /etc/default/openhab2
     owner: root
     group: root
     mode: '0644'
     backup: yes
   notify:
-  - openhab restart
+    - openhab restart
+
+- name: configure nginx
+  include: configure-nginx.yml
+  when: openhab_configure_nginx

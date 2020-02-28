@@ -6,16 +6,20 @@ galaxy_info:
   license: MIT
   min_ansible_version: 1.2
   platforms:
-  - name: Ubuntu
+  - name: EL
     versions:
-    - 18.04
-  - name: CentOS
-    versions:
-    - 7
+      - 7
+      - 8
   - name: Debian
     versions:
-    - 9
+      - stretch
+      - buster
+  - name: Ubuntu
+    versions:
+      - xenial
+      - bionic
+      - focal
 
   galaxy_tags:
-  - iot
-  - automation
+    - iot
+    - automation
