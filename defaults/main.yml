@@ -31,3 +31,6 @@ openhab_nginx_options: ""
 openhab_nginx_allow: []
 
 _openhab_apache2utils_package: apache2-utils
+_openhab_nginx_sites_enabled: /etc/nginx/sites-enabled
+
+
