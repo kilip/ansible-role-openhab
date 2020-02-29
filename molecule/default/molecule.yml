@@ -5,10 +5,6 @@ dependency:
 driver:
   name: docker
 
-lint: |
-  yamllint .
-  ansible-lint
-
 platforms:
 - name: instance
   image: "kilip/molecule-${MOLECULE_DISTRO:-centos:8}"

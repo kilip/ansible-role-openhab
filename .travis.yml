@@ -15,7 +15,6 @@ env:
   - MOLECULE_DISTRO: centos:7
   - MOLECULE_DISTRO: ubuntu:20.04
   - MOLECULE_DISTRO: ubuntu:18.04
-  - MOLECULE_DISTRO: ubuntu:16.04
   - MOLECULE_DISTRO: debian:10
   - MOLECULE_DISTRO: debian:9
 
