@@ -27,7 +27,7 @@
     - role: openhab
 
   vars:
-    openhab_install_addons: false
+    openhab_install_addons: true
     openhab_conf: /srv/openhab/config
     openhab_userdata: /srv/openhab/userdata
     openhab_config_repo: git@bitbucket.org:kilip/openhab-default-config.git
