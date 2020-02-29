@@ -52,7 +52,3 @@
     backup: yes
   notify:
     - openhab restart
-
-- name: configure nginx
-  include: configure-nginx.yml
-  when: openhab_configure_nginx
