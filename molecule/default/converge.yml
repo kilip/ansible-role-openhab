@@ -33,3 +33,6 @@
     openhab_config_repo: git@bitbucket.org:kilip/openhab-default-config.git
     openhab_config_ssh_keyfile: /srv/deploy/openhab.rsa
     openhab_config_owner: toni
+    openhab_nginx_users:
+      - username: openhab
+        password: openhab

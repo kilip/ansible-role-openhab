@@ -52,3 +52,7 @@
     backup: yes
   notify:
     - openhab restart
+
+- name: configure user
+  include: nginx-user.yml
+  when: openhab_nginx_users|length > 0
