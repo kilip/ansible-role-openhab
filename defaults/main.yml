@@ -25,3 +25,4 @@ openhab_nginx_htpasswd_file: "{{ openhab_conf }}/.htpasswd"
 
 _openhab_nginx_htpasswd_checksum: "{{ openhab_nginx_htpasswd_file }}.checksum"
 _openhab_apache2utils_package: apache2-utils
+_openhab_zulu_package: zulu-8

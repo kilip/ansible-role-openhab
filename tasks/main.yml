@@ -3,9 +3,14 @@
 
 - include: "repo-{{ ansible_os_family }}.yml"
 
+- name: fact ~> set java in arm
+  set_fact:
+    _openhab_zulu_package: zulu-embedded-8
+  when: ansible_machine.find('arm') != -1
+
 - name: package ~> install zulu-8
   package:
-    name: zulu-8
+    name: "{{ _openhab_zulu_package }}"
     state: present
 
 - name: set_fact ~> openhab install addons packages
