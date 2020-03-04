@@ -37,7 +37,6 @@
   register: userdata_etc
 
 - name: copy ~> copy basic userdata
-  become: openhab
   copy:
     dest: /srv/openhab/userdata
     src: /var/lib/openhab2/etc

@@ -54,4 +54,3 @@
     state: directory
     owner: "openhab"
     group: "openhab"
-    mode: "0775"
