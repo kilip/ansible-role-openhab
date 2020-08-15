@@ -1,0 +1,34 @@
+---
+dist: bionic
+language: python
+services: docker
+
+cache:
+- pip
+- apt
+
+env:
+  global:
+  - ROLE_NAME: openhab
+  matrix:
+  - MOLECULE_DISTRO: centos:8
+  - MOLECULE_DISTRO: centos:7
+  - MOLECULE_DISTRO: ubuntu:20.04
+  - MOLECULE_DISTRO: ubuntu:18.04
+  - MOLECULE_DISTRO: ubuntu:16.04
+  - MOLECULE_DISTRO: debian:10
+  - MOLECULE_DISTRO: debian:9
+
+install:
+  # Install test dependencies.
+  - pip install molecule yamllint ansible-lint docker testinfra
+before_script:
+- cd ../
+- mv ansible-role-$ROLE_NAME $ROLE_NAME
+- cd $ROLE_NAME
+
+script:
+  - molecule test
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

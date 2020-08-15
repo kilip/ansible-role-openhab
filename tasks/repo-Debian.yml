@@ -1,0 +1,31 @@
+- name: apt_key ~> add zulu apt key
+  apt_key:
+    keyserver: hkp://keyserver.ubuntu.com:80
+    id: '0xB1998361219BD9C9'
+    state: present
+
+- name: apt_repository ~> add zulu ubuntu
+  apt_repository:
+    filename: 'zulu'
+    repo: deb http://repos.azulsystems.com/ubuntu stable main
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: apt_repository ~> add zulu debian
+  apt_repository:
+    filename: 'zulu'
+    repo: deb http://repos.azulsystems.com/debian stable main
+    state: present
+  when: ansible_distribution == 'Debian'
+
+- name: apt_key ~> add openhab
+  apt_key:
+    url: http://bintray.com/user/downloadSubjectPublicKey?username=openhab
+    state: present
+
+- name: apt_repository ~> add openhab
+  apt_repository:
+    filename: 'openhab'
+    repo: deb http://dl.bintray.com/openhab/apt-repo2 stable main
+    state: present
+  when: ansible_os_family == 'Debian'

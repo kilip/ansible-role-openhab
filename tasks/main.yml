@@ -1,0 +1,50 @@
+---
+- include: preflight.yml
+  when: _openhab_preflight
+  tags: [ preflight ]
+  
+- include: setup-config.yml
+
+- include: "repo-{{ ansible_os_family }}.yml"
+
+- name: fact ~> set java in arm
+  set_fact:
+    _openhab_zulu_package: zulu-embedded-8
+  when: ansible_machine.find('arm') != -1
+
+- name: package ~> install zulu-8
+  package:
+    name: "{{ _openhab_zulu_package }}"
+    state: present
+
+- name: set_fact ~> openhab install addons packages
+  set_fact:
+    openhab_packages: "{{ openhab_packages + [ 'openhab2-addons' ] }}"
+  when: openhab_install_addons
+
+- name: package ~> install openhab packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ openhab_packages }}"
+
+- name: service ~> start openhab
+  service:
+    name: openhab2
+    state: started
+    enabled: yes
+
+- name: template ~> configure /etc/default/openhab2
+  template:
+    src: openhab-default.conf
+    dest: /etc/default/openhab2
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  notify:
+    - openhab restart
+
+- name: configure user
+  include_tasks: nginx.yml
+  when: openhab_configure_nginx

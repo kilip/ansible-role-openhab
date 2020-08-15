@@ -1,0 +1,35 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+lint: |
+  yamllint .
+  ansible-lint
+
+platforms:
+- name: instance
+  image: "kilip/molecule-${MOLECULE_DISTRO:-centos:8}"
+  published_ports:
+    - 0.0.0.0:8443:8443
+    - 0.0.0.0:8080:8080
+  command: ${MOLECULE_DOCKER_COMMAND:-""}
+  privileged: true
+  pre_build_image: true
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+
+verifier:
+  name: testinfra
+  options:
+    verbose: true

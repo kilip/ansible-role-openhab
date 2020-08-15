@@ -1,0 +1,23 @@
+- name: package ~> ensure epel installed
+  package:
+    name: epel-release
+    state: present
+
+- name: repository ~> add zulu repo
+  yum_repository:
+    name: zulu
+    description: Zulu Java Repository
+    baseurl: "http://repos.azulsystems.com/rhel/$releasever/$basearch"
+    gpgkey: http://repos.azulsystems.com/RPM-GPG-KEY-azulsystems
+    state: present
+
+- name: repository ~> add openhab2
+  yum_repository:
+    name: openhab2
+    description: Openhab 2 Stable
+    baseurl: http://dl.bintray.com/openhab/rpm-repo2/stable
+    gpgkey: http://bintray.com/user/downloadSubjectPublicKey?username=openhab
+
+- name: fact ~> set fact for RedHat
+  set_fact:
+    _openhab_apache2utils_package: httpd-tools

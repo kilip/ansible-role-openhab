@@ -1,0 +1,36 @@
+---
+# defaults file for openhab
+openhab_install_addons: false
+openhab_packages:
+  - openhab2
+
+# openhab default config section
+openhab_http_port: 8080
+openhab_https_port: 8443
+openhab_http_address: 0.0.0.0
+openhab_backups: /var/lib/openhab2/backups
+openhab_extra_java_opts: ""
+openhab_conf: /etc/openhab2
+openhab_userdata: /var/lib/openhab2
+
+openhab_config_repo: null
+openhab_config_ssh_keyfile: null
+openhab_config_version: "master"
+
+openhab_config_source: null
+openhab_config_owner: openhab
+openhab_config_group: openhab
+
+openhab_configure_nginx: no
+openhab_nginx_server_name: null
+openhab_nginx_certificate: null
+openhab_nginx_certificate_key: null
+
+openhab_nginx_users: []
+openhab_nginx_allow: []
+openhab_nginx_htpasswd_file: "{{ openhab_conf }}/.htpasswd"
+
+_openhab_nginx_htpasswd_checksum: "{{ openhab_nginx_htpasswd_file }}.checksum"
+_openhab_apache2utils_package: apache2-utils
+_openhab_zulu_package: zulu-8
+_openhab_preflight: yes

@@ -1,0 +1,50 @@
+- name: ensure htpasswd installed
+  package:
+    name: "{{ _openhab_apache2utils_package }}"
+    state: present
+
+# "ansible_machine": "armv7l"
+- name: generate checksum
+  set_fact:
+    _openhab_nginx_user_checksum: "{{ openhab_nginx_users | checksum }}"
+
+- name: stat ~> htpasswd file
+  stat:
+    path: "{{ openhab_nginx_htpasswd_file }}"
+  register: _openhab_htpasswd_stat
+
+- name: cat current checksum
+  command: "cat {{ _openhab_nginx_htpasswd_checksum }}"
+  register: _openhab_nginx_htpasswd_stat
+  failed_when: _openhab_nginx_htpasswd_stat.rc > 99
+  changed_when: false
+
+- name: touch htpasswd checksum file
+  file:
+    path: "{{ _openhab_nginx_htpasswd_checksum }}"
+    state: touch
+  when: _openhab_nginx_htpasswd_stat.rc > 0
+
+- name: touch htpasswd file
+  file:
+    path: "{{ openhab_nginx_htpasswd_file }}"
+    state: touch
+  when: not _openhab_htpasswd_stat.stat.exists
+
+
+- name: set fact users changed
+  set_fact:
+    _openhab_users_changed: "{{ _openhab_nginx_htpasswd_stat.stdout.find(_openhab_nginx_user_checksum) == -1 }}"
+
+- name: htpasswd ~> generate password
+  command: "htpasswd -b {{ openhab_nginx_htpasswd_file }} {{ item.username }} {{ item.password }}"
+  loop: "{{ openhab_nginx_users }}"
+  changed_when: false
+  when: _openhab_users_changed
+
+- name: write checksum file
+  copy:
+    content: "{{ _openhab_nginx_user_checksum }}"
+    dest: "{{ _openhab_nginx_htpasswd_checksum }}"
+  changed_when: false
+  when: _openhab_users_changed

@@ -1,0 +1,22 @@
+- name: preflight ~> ensure nginx users configured
+  fail:
+    msg: "openhab_nginx_users config value should be configured"
+  when: openhab_configure_nginx and not openhab_nginx_users|length > 0
+
+- name: preflight ~> ensure nginx allow address configured
+  fail:
+    msg: "openhab_nginx_allow vars should be configured"
+  when: openhab_configure_nginx and not openhab_nginx_allow|length > 0
+
+- name: preflight ~> ensure nginx variables configured
+  fail:
+    msg: "openhab {{ item }} should be configured"
+  when: item == None
+  with_items:
+  - openhab_nginx_server_name
+  - openhab_nginx_certificate
+  - openhab_nginx_certificate_key
+
+- name: preflight ~> ensure openhab preflight running once
+  set_fact:
+    _openhab_preflight: no

@@ -1,0 +1,66 @@
+# user setup
+- name: group ~> ensure openhab group exists
+  group:
+    name: openhab
+    state: present
+
+- name: user ~> ensure openhab user exists
+  user:
+    name: openhab
+    comment: Openhab System User
+    append: yes
+    group: openhab
+    state: present
+    system: true
+
+- name: group ~> ensure config group exists
+  group:
+    name: "{{ openhab_config_group }}"
+    state: present
+
+- name: user ~> ensure config owner exits
+  user:
+    name: "{{ openhab_config_owner }}"
+    state: present
+    groups: "{{ openhab_config_group }}"
+    append: yes
+
+- name: file ~> ensure directory exists
+  file:
+    path: "{{ openhab_conf }}"
+    state: directory
+    owner: "{{ openhab_config_owner }}"
+    group: "{{ openhab_config_group }}"
+    mode: "0775"
+
+- name: package ~> ensure git installed
+  package:
+    name: git
+    state: present
+  when: openhab_config_repo != None
+
+- name: git ~> checkout config "{{ openhab_config_repo }}"
+  git:
+    accept_hostkey: yes
+    repo: "{{ openhab_config_repo }}"
+    dest: "{{ openhab_conf }}"
+    version: "{{ openhab_config_version }}"
+    key_file: "{{ openhab_config_ssh_keyfile }}"
+  when: openhab_config_repo != None
+
+- name: copy ~> configuration source
+  copy:
+    src: "{{ openhab_config_source }}"
+    dest: "{{ openhab_conf }}"
+    owner: "{{ openhab_config_owner }}"
+    group: "{{ openhab_config_group }}"
+    backup: yes
+  changed_when: false
+  when: openhab_config_source != None
+
+- name: file ~> ensure userdata dir exists
+  file:
+    path: "{{ openhab_userdata }}"
+    state: directory
+    owner: "openhab"
+    group: "openhab"
